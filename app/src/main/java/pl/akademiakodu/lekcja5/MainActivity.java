@@ -4,6 +4,8 @@ import android.app.Activity;
 import android.app.Fragment;
 import android.app.FragmentManager;
 import android.app.FragmentTransaction;
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.graphics.Typeface;
 import android.os.Handler;
 import android.os.Looper;
@@ -22,6 +24,7 @@ import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.StringTokenizer;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -34,11 +37,35 @@ public class MainActivity extends Activity{
     FrameLayout layout;
 
 
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         ButterKnife.bind(this);
+
+
+        SharedPreferences config = getSharedPreferences("ourApp", Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = config.edit();
+        editor.putString("ourKey", "jakaś wartość");
+
+        editor.commit();
+
+
+
+
+        if(config.getBoolean("isFirstTimeOpened", true)) {
+            editor.putBoolean("isFirstTimeOpened", false);
+            editor.commit();
+
+        }else {
+
+
+        }
+
+
+
 
         if(savedInstanceState == null) {
             FragmentManager fragmentManager = this.getFragmentManager();

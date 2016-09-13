@@ -1,5 +1,6 @@
 package pl.akademiakodu.lekcja5;
 
+import android.util.Log;
 import android.webkit.JavascriptInterface;
 import android.widget.Toast;
 
@@ -23,6 +24,7 @@ public class WebInterface {
     @JavascriptInterface
     public void changeText(String text){
         activity.changeText(text);
+        Log.e("handler", "odpałiło changeText");
     }
 
 

@@ -7,6 +7,7 @@ import android.os.Looper;
 import android.os.Message;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.webkit.WebView;
 import android.widget.AdapterView;
@@ -31,18 +32,24 @@ public class MainActivity extends Activity{
     @BindView(R.id.textView)
     TextView textView;
 
+
+    Handler handler;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         ButterKnife.bind(this);
 
-        Handler handler = new Handler(Looper.getMainLooper(), new Handler.Callback() {
+        handler = new Handler(Looper.getMainLooper(), new Handler.Callback() {
             @Override
             public boolean handleMessage(Message msg) {
                 if(msg.what == 0) {
-                 
+                 textView.setText(msg.getData().getString("msg"));
+                    Log.e("handler", "uruchomiono msg 0");
                 }
+                Log.e("handler", "odpałiło handleMessage");
+
                 return false;
             }
         });
@@ -59,9 +66,17 @@ public class MainActivity extends Activity{
 
     public void changeText(String text){
 
+        Message message = new Message();
+        Bundle bundle = new Bundle();
+        bundle.putString("msg", text);
 
+        message.setData(bundle);
+        message.what = 0;
 
-      //  textView.setText(text);
+        handler.sendMessage(message);
+
+        Log.e("handler", "odpałiło changeText");
+
     }
 
 

@@ -5,6 +5,7 @@ import android.graphics.Typeface;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
+import android.webkit.WebView;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Spinner;
@@ -18,13 +19,14 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnItemSelected;
 
-public class MainActivity extends Activity implements AdapterView.OnItemSelectedListener{
+public class MainActivity extends Activity{
 
 
-    @BindView(R.id.spinner)
-    Spinner spinner;
+    @BindView(R.id.webView)
+    WebView webView;
 
-    List<String> ourList;
+    @BindView(R.id.textView)
+    TextView textView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -32,40 +34,18 @@ public class MainActivity extends Activity implements AdapterView.OnItemSelected
         setContentView(R.layout.activity_main);
         ButterKnife.bind(this);
 
-        ourList = new ArrayList<String>();
-
-        spinner.setOnItemSelectedListener(this);
-
-        loadFakeData();
-
-        ArrayAdapter<String> ourAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, ourList);
-        ourAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        webView.addJavascriptInterface(new WebInterface(this), "Android");
+        webView.getSettings().setJavaScriptEnabled(true);
+        webView.loadUrl("http://projekt.techloft.pl/akademiakodu/");
 
 
-        spinner.setAdapter(ourAdapter);
 
     }
 
-    private void loadFakeData() {
-        ourList.add("Pozycja 1");
-        ourList.add("Pozycja 2");
-        ourList.add("Pozycja 3");
-        ourList.add("Pozycja 4");
+
+    public void changeText(String text){
+        textView.setText(text);
     }
 
 
-    @Override
-    public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-        Toast.makeText(this, "Zaznaczyles: "  + parent.getItemAtPosition(position), Toast.LENGTH_LONG).show();
-    }
-
-    @Override
-    public void onNothingSelected(AdapterView<?> parent) {
-
-    }
-
-//    @OnItemSelected(R.id.spinner)
-//    public void clickedItem(Spinner spinner, int position){
-//
-//    }
 }

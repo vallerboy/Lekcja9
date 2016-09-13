@@ -36,7 +36,7 @@ public class BlankFragment extends Fragment {
 
     @OnClick(R.id.button)
     public void onClick(View v){
-       // Toast.makeText(MainActivity.this, "Działa", Toast.LENGTH_LONG).show();
+        Toast.makeText(this.getActivity(), "Działa", Toast.LENGTH_LONG).show();
     }
 
 }

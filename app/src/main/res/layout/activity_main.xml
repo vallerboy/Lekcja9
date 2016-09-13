@@ -16,4 +16,16 @@
         android:id="@+id/spinner"
         android:layout_centerVertical="true"
         android:layout_centerHorizontal="true" />
+
+    <pl.akademiakodu.lekcja5.OwnTextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:text="Large Text"
+        android:id="@+id/textView"
+        android:layout_above="@+id/spinner"
+        android:layout_alignRight="@+id/spinner"
+        android:layout_alignEnd="@+id/spinner" />
+
+
 </RelativeLayout>

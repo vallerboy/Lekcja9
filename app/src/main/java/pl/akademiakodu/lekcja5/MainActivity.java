@@ -1,6 +1,8 @@
 package pl.akademiakodu.lekcja5;
 
 import android.app.Activity;
+import android.app.FragmentManager;
+import android.app.FragmentTransaction;
 import android.graphics.Typeface;
 import android.os.Handler;
 import android.os.Looper;
@@ -12,6 +14,7 @@ import android.view.View;
 import android.webkit.WebView;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.FrameLayout;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -26,14 +29,9 @@ import butterknife.OnItemSelected;
 public class MainActivity extends Activity{
 
 
-    @BindView(R.id.webView)
-    WebView webView;
+    @BindView(R.id.frameLayout)
+    FrameLayout layout;
 
-    @BindView(R.id.textView)
-    TextView textView;
-
-
-    Handler handler;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -41,43 +39,17 @@ public class MainActivity extends Activity{
         setContentView(R.layout.activity_main);
         ButterKnife.bind(this);
 
-        handler = new Handler(Looper.getMainLooper(), new Handler.Callback() {
-            @Override
-            public boolean handleMessage(Message msg) {
-                if(msg.what == 0) {
-                 textView.setText(msg.getData().getString("msg"));
-                    Log.e("handler", "uruchomiono msg 0");
-                }
-                Log.e("handler", "odpałiło handleMessage");
 
-                return false;
-            }
-        });
+        FragmentManager fragmentManager = getFragmentManager();
 
-
-        webView.addJavascriptInterface(new WebInterface(this), "Android");
-        webView.getSettings().setJavaScriptEnabled(true);
-        webView.loadUrl("http://projekt.techloft.pl/akademiakodu/");
-
+        FragmentTransaction ft = fragmentManager.beginTransaction();
+        ft.add(R.id.frameLayout, new BlankFragment());
 
 
     }
 
 
-    public void changeText(String text){
-
-        Message message = new Message();
-        Bundle bundle = new Bundle();
-        bundle.putString("msg", text);
-
-        message.setData(bundle);
-        message.what = 0;
-
-        handler.sendMessage(message);
-
-        Log.e("handler", "odpałiło changeText");
-
     }
 
 
-}
+

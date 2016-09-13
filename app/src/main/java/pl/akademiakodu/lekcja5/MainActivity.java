@@ -44,6 +44,7 @@ public class MainActivity extends Activity{
 
         FragmentTransaction ft = fragmentManager.beginTransaction();
         ft.add(R.id.frameLayout, new BlankFragment());
+        ft.commit();
 
 
     }

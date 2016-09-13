@@ -2,6 +2,9 @@ package pl.akademiakodu.lekcja5;
 
 import android.app.Activity;
 import android.graphics.Typeface;
+import android.os.Handler;
+import android.os.Looper;
+import android.os.Message;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -34,6 +37,17 @@ public class MainActivity extends Activity{
         setContentView(R.layout.activity_main);
         ButterKnife.bind(this);
 
+        Handler handler = new Handler(Looper.getMainLooper(), new Handler.Callback() {
+            @Override
+            public boolean handleMessage(Message msg) {
+                if(msg.what == 0) {
+                 
+                }
+                return false;
+            }
+        });
+
+
         webView.addJavascriptInterface(new WebInterface(this), "Android");
         webView.getSettings().setJavaScriptEnabled(true);
         webView.loadUrl("http://projekt.techloft.pl/akademiakodu/");
@@ -44,7 +58,10 @@ public class MainActivity extends Activity{
 
 
     public void changeText(String text){
-        textView.setText(text);
+
+
+
+      //  textView.setText(text);
     }
 
 

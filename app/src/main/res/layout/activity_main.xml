@@ -20,15 +20,7 @@
 
     </FrameLayout>
 
-    <fragment
-        android:layout_width="match_parent"
-        android:layout_height="250dp"
-        android:id="@+id/ourFragment"
-        class="pl.akademiakodu.lekcja5.BlankFragment"
-        tools:layout="@layout/fragment_blank"
-        android:layout_alignParentBottom="true"
-        android:layout_alignParentRight="true"
-        android:layout_alignParentEnd="true"></fragment>
+
 
 
 </RelativeLayout>

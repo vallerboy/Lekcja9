@@ -47,15 +47,15 @@ public class MainActivity extends Activity{
             ft.commit();
 
 
-            Fragment fragment = fragmentManager.findFragmentById(R.id.frameLayout);
-            FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-            fragmentTransaction.remove(fragment);
+         //   Fragment fragment = fragmentManager.findFragmentById(R.id.frameLayout);
+        //    FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+         //   fragmentTransaction.remove(fragment);
 
-            BlankFragment fragment1 = (BlankFragment) getFragmentManager().findFragmentById(R.id.ourFragment);
+        //    BlankFragment fragment1 = (BlankFragment) getFragmentManager().findFragmentById(R.id.ourFragment);
 
-             if(fragment1 == null || fragment1.isInLayout()) {
+         //    if(fragment1 == null || fragment1.isInLayout()) {
 
-             }
+        //     }
 
             //ft.replace();
             //ft.remove();

@@ -1,6 +1,7 @@
 package pl.akademiakodu.lekcja5;
 
 import android.app.Activity;
+import android.app.Fragment;
 import android.app.FragmentManager;
 import android.app.FragmentTransaction;
 import android.graphics.Typeface;
@@ -39,12 +40,26 @@ public class MainActivity extends Activity{
         setContentView(R.layout.activity_main);
         ButterKnife.bind(this);
 
+        if(savedInstanceState == null) {
+            FragmentManager fragmentManager = this.getFragmentManager();
+            FragmentTransaction ft = fragmentManager.beginTransaction();
+            ft.add(R.id.frameLayout, new BlankFragment());
+            ft.commit();
 
-        FragmentManager fragmentManager = getFragmentManager();
 
-        FragmentTransaction ft = fragmentManager.beginTransaction();
-        ft.add(R.id.frameLayout, new BlankFragment());
-        ft.commit();
+            Fragment fragment = fragmentManager.findFragmentById(R.id.frameLayout);
+            FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+            fragmentTransaction.remove(fragment);
+
+            BlankFragment fragment1 = (BlankFragment) getFragmentManager().findFragmentById(R.id.ourFragment);
+
+             if(fragment1 == null || fragment1.isInLayout()) {
+
+             }
+
+            //ft.replace();
+            //ft.remove();
+        }
 
 
     }

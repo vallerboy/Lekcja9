@@ -4,14 +4,22 @@ import android.app.Activity;
 import android.app.Fragment;
 import android.app.FragmentManager;
 import android.app.FragmentTransaction;
+import android.app.Notification;
+import android.app.NotificationManager;
+import android.app.PendingIntent;
+import android.content.BroadcastReceiver;
 import android.content.Context;
+import android.content.Intent;
+import android.content.IntentFilter;
 import android.content.SharedPreferences;
+import android.content.SharedPreferences.Editor;
 import android.graphics.Typeface;
 import android.os.Handler;
 import android.os.Looper;
 import android.os.Message;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.app.NotificationCompat;
 import android.util.Log;
 import android.view.View;
 import android.webkit.WebView;
@@ -28,13 +36,10 @@ import java.util.StringTokenizer;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 import butterknife.OnItemSelected;
 
-public class MainActivity extends Activity{
-
-
-    @BindView(R.id.frameLayout)
-    FrameLayout layout;
+public class MainActivity extends Activity {
 
 
 
@@ -46,53 +51,38 @@ public class MainActivity extends Activity{
         ButterKnife.bind(this);
 
 
-        SharedPreferences config = getSharedPreferences("ourApp", Context.MODE_PRIVATE);
-        SharedPreferences.Editor editor = config.edit();
-        editor.putString("ourKey", "jakaś wartość");
-
-        editor.commit();
 
 
-
-
-        if(config.getBoolean("isFirstTimeOpened", true)) {
-            editor.putBoolean("isFirstTimeOpened", false);
-            editor.commit();
-
-        }else {
-
-
-        }
-
-
-
-
-        if(savedInstanceState == null) {
-            FragmentManager fragmentManager = this.getFragmentManager();
-            FragmentTransaction ft = fragmentManager.beginTransaction();
-            ft.add(R.id.frameLayout, new BlankFragment());
-            ft.commit();
-
-
-         //   Fragment fragment = fragmentManager.findFragmentById(R.id.frameLayout);
-        //    FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-         //   fragmentTransaction.remove(fragment);
-
-        //    BlankFragment fragment1 = (BlankFragment) getFragmentManager().findFragmentById(R.id.ourFragment);
-
-         //    if(fragment1 == null || fragment1.isInLayout()) {
-
-        //     }
-
-            //ft.replace();
-            //ft.remove();
-        }
 
 
     }
 
 
+    @OnClick(R.id.button2)
+    public void onClick(View v) {
+        createNotyfication();
     }
+
+
+    private void createNotyfication(){
+        Intent intent = new Intent(this, Main2Activity.class);
+        PendingIntent pendingIntent = PendingIntent.getActivity(this, 0, intent, 0);
+
+
+        Notification notification = new NotificationCompat.Builder(this)
+                .setContentTitle("Hello World!")
+                .setContentText("Witaj AkademioKodu, przybywam!")
+                .setTicker("Przyszła wiadomość...")
+                .setSmallIcon(R.mipmap.ic_launcher)
+                //.setLargeIcon(R.mipmap.ic_launcher)
+                .setAutoCancel(false)
+                .setContentIntent(pendingIntent).build();
+
+        NotificationManager notificationManager = (NotificationManager) getSystemService(NOTIFICATION_SERVICE);
+        notificationManager.notify(0, notification);
+
+    }
+}
 
 
 

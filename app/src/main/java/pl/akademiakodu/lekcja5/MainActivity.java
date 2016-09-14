@@ -46,7 +46,7 @@ public class MainActivity extends Activity {
 
 
 
-    private IntentFilter filter = new IntentFilter("pl.oskar.akademiakodu");
+    private IntentFilter filter = new IntentFilter("android.provider.Telephony.SMS_RECRIVED");
 
     private BroadcastReceiver broadcastReceiver = new BroadcastReceiver() {
           @Override
@@ -61,17 +61,31 @@ public class MainActivity extends Activity {
         setContentView(R.layout.activity_main);
         ButterKnife.bind(this);
 
+
+        // Zarejestruj broadcasta
         registerReceiver(broadcastReceiver, filter);
 
 
         // Wyślij powiadomienie
         Intent i = new Intent();
-        i.setAction("pl.oskar.akademiakodu");
+        i.setAction("showToastAkademiaKodu");
         sendBroadcast(i);
 
     }
 
 
+    @Override
+    public void onStop(){
+        super.onStop();
+
+        // Nie zapomnij odrejestrować!
+        unregisterReceiver(broadcastReceiver);
+    }
+
+    @Override
+    public void onStart(){
+        super.onStart();
+    }
 
 
     }

@@ -14,6 +14,7 @@ import android.content.IntentFilter;
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.Editor;
 import android.graphics.Typeface;
+import android.net.Uri;
 import android.os.Handler;
 import android.os.Looper;
 import android.os.Message;
@@ -120,10 +121,36 @@ public class MainActivity extends Activity {
                 .setSmallIcon(R.mipmap.ic_launcher)
                 .setAutoCancel(false)
                 .setStyle(inboxStyle)
-                .setContentIntent(pendingIntent).build();
+                .setContentIntent(pendingIntent)
+                .build();
         NotificationManager notificationManager = (NotificationManager) getSystemService(NOTIFICATION_SERVICE);
         notificationManager.notify(1, notification);
 
+
+    }
+
+    private  void createActionNotyfication(){
+        Intent intent = new Intent(this, Main2Activity.class);
+        PendingIntent pendingIntent = PendingIntent.getActivity(this, 0, intent, 0);
+
+        String url = "tel:123123123";
+
+        Intent intentCall = new Intent(Intent.ACTION_CALL, Uri.parse(url));
+        PendingIntent pendingCall = PendingIntent.getActivity(this, 0, intentCall, 0);
+
+
+        Notification notification = new NotificationCompat.Builder(this)
+                .setContentTitle("Hello World!")
+                .setContentText("Witaj AkademioKodu, przybywam!")
+                .setTicker("Przyszła wiadomość...")
+                .setSmallIcon(R.mipmap.ic_launcher)
+                .setAutoCancel(false)
+                .setContentIntent(pendingIntent)
+                .addAction(android.R.drawable.ic_menu_call, "Dzwoń", pendingCall)
+                .addAction(R.mipmap.ic_launcher, "Akcja", pendingIntent)
+                .build();
+        NotificationManager notificationManager = (NotificationManager) getSystemService(NOTIFICATION_SERVICE);
+        notificationManager.notify(2, notification);
 
     }
 

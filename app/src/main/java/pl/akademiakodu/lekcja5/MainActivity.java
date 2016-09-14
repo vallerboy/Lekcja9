@@ -46,7 +46,7 @@ public class MainActivity extends Activity {
 
 
 
-    private IntentFilter filter = new IntentFilter("android.provider.Telephony.SMS_RECRIVED");
+    private IntentFilter filter = new IntentFilter("showToastAkademiaKodu");
 
     private BroadcastReceiver broadcastReceiver = new BroadcastReceiver() {
           @Override
@@ -63,7 +63,7 @@ public class MainActivity extends Activity {
 
 
         // Zarejestruj broadcasta
-        registerReceiver(broadcastReceiver, filter);
+        //registerReceiver(broadcastReceiver, filter);
 
 
         // Wyślij powiadomienie
@@ -79,7 +79,7 @@ public class MainActivity extends Activity {
         super.onStop();
 
         // Nie zapomnij odrejestrować!
-        unregisterReceiver(broadcastReceiver);
+        //unregisterReceiver(broadcastReceiver);
     }
 
     @Override

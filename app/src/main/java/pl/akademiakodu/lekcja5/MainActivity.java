@@ -44,10 +44,16 @@ import butterknife.OnItemSelected;
 public class MainActivity extends Activity {
 
 
-    @BindView(R.id.button2)
-    public Button button;
 
 
+    private IntentFilter filter = new IntentFilter("pl.oskar.akademiakodu");
+
+    private BroadcastReceiver broadcastReceiver = new BroadcastReceiver() {
+          @Override
+          public void onReceive(Context context, Intent intent) {
+              Toast.makeText(context, "Przyszło do mnie coś!", Toast.LENGTH_LONG).show();
+          }
+      };
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -55,7 +61,15 @@ public class MainActivity extends Activity {
         setContentView(R.layout.activity_main);
         ButterKnife.bind(this);
 
+        registerReceiver(broadcastReceiver, filter);
 
+
+        // Wyślij powiadomienie
+        Intent i = new Intent();
+        i.setAction("pl.oskar.akademiakodu");
+        sendBroadcast(i);
+
+    }
 
 
 
@@ -63,102 +77,11 @@ public class MainActivity extends Activity {
     }
 
 
-    @OnClick(R.id.button2)
-    public void onClick(View v) {
-        createNotyfication();
-    }
 
 
-    @OnClick(R.id.button3)
-    public void onClick1(View v) {
-        createNotyficationBig();
-    }
-
-    @OnClick(R.id.button4)
-    public void onClick2(View v) {
-        createActionNotyfication();
-    }
-
-    private void createNotyfication(){
-        Intent intent = new Intent(this, Main2Activity.class);
-        PendingIntent pendingIntent = PendingIntent.getActivity(this, 0, intent, 0);
 
 
-        Notification notification = new NotificationCompat.Builder(this)
-                .setContentTitle("Hello World!")
-                .setContentText("Witaj AkademioKodu, przybywam!")
-                .setTicker("Przyszła wiadomość...")
-                .setSmallIcon(R.mipmap.ic_launcher)
-                //.setLargeIcon(R.mipmap.ic_launcher)
-                .setAutoCancel(false)
 
-                .setContentIntent(pendingIntent).build();
-
-        NotificationManager notificationManager = (NotificationManager) getSystemService(NOTIFICATION_SERVICE);
-        notificationManager.notify(0, notification);
-
-        Log.e("noti", "działa!");
-
-    }
-
-
-    private void createNotyficationBig() {
-        Intent intent = new Intent(this, Main2Activity.class);
-        PendingIntent pendingIntent = PendingIntent.getActivity(this, 0, intent, 0);
-
-        String[] strings = new String[3];
-        strings[0] = "Coś nowego";
-        strings[1] = "Coś starego";
-        strings[2] = "AkademiaKodu.pl";
-
-        NotificationCompat.InboxStyle inboxStyle = new NotificationCompat.InboxStyle();
-        inboxStyle.setBigContentTitle("Wiadomości: ");
-
-        for (int i = 0; i < strings.length; i++) {
-            inboxStyle.addLine(strings[i]);
-        }
-
-        Notification notification = new NotificationCompat.Builder(this)
-                .setContentTitle("Hello World!")
-                .setContentText("Witaj AkademioKodu, przybywam!")
-                .setTicker("Przyszła wiadomość...")
-                .setSmallIcon(R.mipmap.ic_launcher)
-                .setAutoCancel(false)
-                .setStyle(inboxStyle)
-                .setContentIntent(pendingIntent)
-                .build();
-        NotificationManager notificationManager = (NotificationManager) getSystemService(NOTIFICATION_SERVICE);
-        notificationManager.notify(1, notification);
-
-
-    }
-
-    private  void createActionNotyfication(){
-        Intent intent = new Intent(this, Main2Activity.class);
-        PendingIntent pendingIntent = PendingIntent.getActivity(this, 0, intent, 0);
-
-        String url = "tel:123123123";
-
-        Intent intentCall = new Intent(Intent.ACTION_CALL, Uri.parse(url));
-        PendingIntent pendingCall = PendingIntent.getActivity(this, 0, intentCall, 0);
-
-
-        Notification notification = new NotificationCompat.Builder(this)
-                .setContentTitle("Hello World!")
-                .setContentText("Witaj AkademioKodu, przybywam!")
-                .setTicker("Przyszła wiadomość...")
-                .setSmallIcon(R.mipmap.ic_launcher)
-                .setAutoCancel(false)
-                .setContentIntent(pendingIntent)
-                .addAction(android.R.drawable.ic_menu_call, "Dzwoń", pendingCall)
-                .addAction(R.mipmap.ic_launcher, "Akcja", pendingIntent)
-                .build();
-        NotificationManager notificationManager = (NotificationManager) getSystemService(NOTIFICATION_SERVICE);
-        notificationManager.notify(2, notification);
-
-    }
-
-    }
 
 
 

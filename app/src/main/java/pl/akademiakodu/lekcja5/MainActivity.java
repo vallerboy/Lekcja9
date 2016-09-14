@@ -74,6 +74,10 @@ public class MainActivity extends Activity {
         createNotyficationBig();
     }
 
+    @OnClick(R.id.button4)
+    public void onClick2(View v) {
+        createActionNotyfication();
+    }
 
     private void createNotyfication(){
         Intent intent = new Intent(this, Main2Activity.class);
